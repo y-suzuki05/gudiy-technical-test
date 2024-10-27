@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import localFont from 'next/font/local'
 import styles from '@/styles/Home.module.css'
+import styled from 'styled-components'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,6 +16,11 @@ const geistMono = localFont({
 })
 
 export default function Home() {
+  const Title = styled.h1`
+    font-size: 3.5rem;
+    text-align: center;
+    color: palevioletred;
+  `
   return (
     <>
       <Head>
@@ -27,14 +33,7 @@ export default function Home() {
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <main className={styles.main}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js logo"
-            width={180}
-            height={38}
-            priority
-          />
+          <Title>weather-app</Title>
           <ol>
             <li>
               Get started by editing <code>src/pages/index.tsx</code>.
