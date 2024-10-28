@@ -11,7 +11,7 @@ const StyledLayout = styled.div`
   justify-content: center;
   background: #e3d7ff;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 30px;
 
   /* PC */

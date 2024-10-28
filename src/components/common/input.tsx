@@ -4,7 +4,7 @@ import styled from 'styled-components'
 type InputProps = {
   id: string
   label: string
-  onAction: (value: string) => void
+  onAction: (value: string) => Promise<void>
 }
 
 const StyledInput = styled.input`
@@ -24,9 +24,13 @@ const StyledLabel = styled.label`
 export const Input = ({ id, label, onAction }: InputProps) => {
   const [inputValue, setInputValue] = useState('')
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
-      onAction(inputValue)
+      try {
+        await onAction(inputValue)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 
@@ -42,7 +46,7 @@ export const Input = ({ id, label, onAction }: InputProps) => {
         type="text"
         value={inputValue}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={(e) => void handleKeyDown(e)}
       />
     </div>
   )
