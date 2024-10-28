@@ -3,16 +3,14 @@ module.exports = {
     'next/core-web-vitals',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jsx-a11y/recommended',
-    'prettier',
+    'prettier'
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions":  {
-    "project": "./tsconfig.json"
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: './tsconfig.json'
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "root": true
+  plugins: ['@typescript-eslint'],
+  root: true
 }
