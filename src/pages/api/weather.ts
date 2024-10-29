@@ -13,7 +13,7 @@ export default async function handler(
 
   try {
     const response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${location}&aqi=no&alerts=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${location}&days=7&aqi=no&alerts=no`
     )
     if (!response.ok) {
       throw new Error('failed fetch')

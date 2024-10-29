@@ -29,7 +29,7 @@ type CurrentType = {
   gust_kph: number
 }
 
-type ForecastDayType = {
+export type ForecastDayType = {
   date: string
   date_epoch: number
   day: {

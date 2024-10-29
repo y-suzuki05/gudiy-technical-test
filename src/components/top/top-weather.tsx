@@ -3,15 +3,17 @@ import { Input } from '@/components/common'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { WeatherType } from '@/types/weather'
+import { CurrentWeather } from '@/components/top'
 
-const Container = styled.div`
+const TopWeatherContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 `
 
 export const TopWeather = () => {
-  const [weatherData, setWeatherData] = useState<WeatherType | undefined>()
+  const [weatherData, setWeatherData] = useState<WeatherType | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
 
   const fetchWeather = async (value: string) => {
@@ -27,12 +29,15 @@ export const TopWeather = () => {
     } catch (error) {
       console.error(error)
       setErrorMessage('取得失敗')
-      setWeatherData(undefined)
+      setWeatherData(null)
     }
   }
 
+  const currentData = weatherData && weatherData.forecast.forecastday[0]
+  // const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
+
   return (
-    <Container>
+    <TopWeatherContainer>
       <Heading level={'h1'}>weather-app</Heading>
       <Input
         id="location-input"
@@ -40,12 +45,7 @@ export const TopWeather = () => {
         onAction={fetchWeather}
       />
       <div>{errorMessage}</div>
-      {weatherData && (
-        <div>
-          <h3>天気情報:</h3>
-          <pre>{JSON.stringify(weatherData, null, 2)}</pre>
-        </div>
-      )}
-    </Container>
+      <CurrentWeather currentData={currentData} />
+    </TopWeatherContainer>
   )
 }
