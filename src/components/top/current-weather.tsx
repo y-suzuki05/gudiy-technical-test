@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 type CurrentWeatherProps = {
   currentData: ForecastDayType | null
+  locationValue: string
 }
 
 const CurrentWeatherContainer = styled.div`
@@ -20,13 +21,16 @@ const CurrentWeatherInfoWrapper = styled.div`
   gap: 30px;
 `
 
-export const CurrentWeather = ({ currentData }: CurrentWeatherProps) => {
+export const CurrentWeather = ({
+  currentData,
+  locationValue
+}: CurrentWeatherProps) => {
   return (
     <>
       <Heading level="h2">現在の天気</Heading>
       <CurrentWeatherContainer>
         {currentData && (
-          <Link href={'/'}>
+          <Link href={`detail/${currentData.date}?location=${locationValue}`}>
             <CurrentWeatherInfoWrapper>
               <Image
                 src={currentData.day.condition.icon}

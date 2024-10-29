@@ -1,20 +1,19 @@
 import { Heading, Input } from '@/components/common'
+import { WeatherType } from '@/types/weather'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { WeatherType } from '@/types/weather'
-import { CurrentWeather, WeeklyWeather } from '@/components/top'
+import { DateWeather } from '@/components/detail'
 
-const TopWeatherContainer = styled.div`
+const DetailWeatherContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
 `
 
-export const TopWeather = () => {
+export const DetailWeather = () => {
   const [weatherData, setWeatherData] = useState<WeatherType | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
-  const [locationValue, setLocationValue] = useState('')
 
   const fetchWeather = async (value: string) => {
     try {
@@ -26,7 +25,6 @@ export const TopWeather = () => {
 
       const data = (await response.json()) as WeatherType
       setWeatherData(data)
-      setLocationValue(value)
     } catch (error) {
       console.error(error)
       setErrorMessage('取得失敗')
@@ -34,21 +32,19 @@ export const TopWeather = () => {
     }
   }
 
-  const currentData = weatherData && weatherData.forecast.forecastday[0]
-  const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
+  console.log(weatherData)
 
   return (
-    <TopWeatherContainer>
-      <Heading level={'h1'}>weather-app</Heading>
+    <DetailWeatherContainer>
+      <Heading level={'h1'}>2024-11-1</Heading>
       <Input
         id="location-input"
         label="地名または緯度経度"
         onAction={fetchWeather}
-        initialValue={locationValue}
+        initialValue="Tokyo"
       />
       <div>{errorMessage}</div>
-      <CurrentWeather currentData={currentData} locationValue={locationValue} />
-      <WeeklyWeather weeklyData={weeklyData} />
-    </TopWeatherContainer>
+      <DateWeather />
+    </DetailWeatherContainer>
   )
 }

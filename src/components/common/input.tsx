@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 type InputProps = {
   id: string
   label: string
   onAction: (value: string) => Promise<void>
+  initialValue?: string
 }
 
 const StyledInput = styled.input`
@@ -21,8 +22,17 @@ const StyledLabel = styled.label`
   margin-bottom: 4px;
 `
 
-export const Input = ({ id, label, onAction }: InputProps) => {
-  const [inputValue, setInputValue] = useState('')
+export const Input = ({
+  id,
+  label,
+  onAction,
+  initialValue = ''
+}: InputProps) => {
+  const [inputValue, setInputValue] = useState(initialValue)
+
+  useEffect(() => {
+    setInputValue(initialValue)
+  }, [initialValue])
 
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {

@@ -27,7 +27,6 @@ const WeeklyWeatherInfoWrapper = styled.div`
 `
 
 export const WeeklyWeather = ({ weeklyData }: WeeklyWeatherProps) => {
-  console.log(weeklyData)
   return (
     <>
       <Heading level="h2">週間予報</Heading>
