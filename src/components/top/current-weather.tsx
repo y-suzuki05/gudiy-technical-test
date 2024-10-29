@@ -13,7 +13,7 @@ const CurrentWeatherContainer = styled.div`
   padding: 30px;
 `
 
-const CurrentWeatherInfo = styled.div`
+const CurrentWeatherInfoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,23 +24,24 @@ export const CurrentWeather = ({ currentData }: CurrentWeatherProps) => {
   return (
     <>
       <Heading level="h2">現在の天気</Heading>
-      {currentData && (
-        <CurrentWeatherContainer>
+      <CurrentWeatherContainer>
+        {currentData && (
           <Link href={'/'}>
-            <CurrentWeatherInfo>
+            <CurrentWeatherInfoWrapper>
               <Image
                 src={currentData.day.condition.icon}
                 alt={currentData.day.condition.text}
               />
               <ul>
+                <li>{currentData.date}</li>
                 <li>最高気温：{currentData.day.maxtemp_c}度</li>
                 <li>最低気温：{currentData.day.mintemp_c}度</li>
                 <li>降水確率：{currentData.day.daily_chance_of_rain}%</li>
               </ul>
-            </CurrentWeatherInfo>
+            </CurrentWeatherInfoWrapper>
           </Link>
-        </CurrentWeatherContainer>
-      )}
+        )}
+      </CurrentWeatherContainer>
     </>
   )
 }

@@ -10,14 +10,15 @@ const StyledLayout = styled.div`
   display: flex;
   justify-content: center;
   background: #e3d7ff;
-  width: 100%;
+  width: 80%;
   height: 100%;
   padding: 30px;
+  margin: 50px auto 50px;
 
-  /* PC */
-  @media (min-width: 768px) {
-    width: 80%;
-    margin: 50px auto 50px;
+  /* SP */
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0;
   }
 `
 

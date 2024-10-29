@@ -1,9 +1,8 @@
-import { Heading } from '@/components/common'
-import { Input } from '@/components/common'
+import { Heading, Input } from '@/components/common'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { WeatherType } from '@/types/weather'
-import { CurrentWeather } from '@/components/top'
+import { CurrentWeather, WeeklyWeather } from '@/components/top'
 
 const TopWeatherContainer = styled.div`
   display: flex;
@@ -34,7 +33,7 @@ export const TopWeather = () => {
   }
 
   const currentData = weatherData && weatherData.forecast.forecastday[0]
-  // const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
+  const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
 
   return (
     <TopWeatherContainer>
@@ -46,6 +45,7 @@ export const TopWeather = () => {
       />
       <div>{errorMessage}</div>
       <CurrentWeather currentData={currentData} />
+      <WeeklyWeather weeklyData={weeklyData} />
     </TopWeatherContainer>
   )
 }
