@@ -1,7 +1,7 @@
 import { Heading, Input } from '@/components/common'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { WeatherType } from '@/types/weather'
+import { WeatherForecastType } from '@/types/weather'
 import { CurrentWeather, WeeklyWeather } from '@/components/top'
 
 const TopWeatherContainer = styled.div`
@@ -12,19 +12,21 @@ const TopWeatherContainer = styled.div`
 `
 
 export const TopWeather = () => {
-  const [weatherData, setWeatherData] = useState<WeatherType | null>(null)
+  const [weatherData, setWeatherData] = useState<WeatherForecastType | null>(
+    null
+  )
   const [errorMessage, setErrorMessage] = useState('')
   const [locationValue, setLocationValue] = useState('')
 
   const fetchWeather = async (value: string) => {
     try {
-      const response = await fetch(`/api/weather?location=${value}`)
+      const response = await fetch(`/api/weather-forecast?location=${value}`)
 
       if (!response.ok) {
         throw new Error('取得失敗')
       }
 
-      const data = (await response.json()) as WeatherType
+      const data = (await response.json()) as WeatherForecastType
       setWeatherData(data)
       setLocationValue(value)
     } catch (error) {

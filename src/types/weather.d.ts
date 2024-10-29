@@ -81,8 +81,13 @@ type ForecastType = {
   forecastday: ForecastDayType[]
 }
 
-export type WeatherType = {
+export type WeatherForecastType = {
   location: LocationType
   current: CurrentType
   forecast: ForecastType
+}
+
+export type WeatherCurrentType = {
+  location: LocationType
+  current: CurrentType
 }
