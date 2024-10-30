@@ -19,7 +19,6 @@ const StyledLayout = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     margin: 0;
-    /* height: 100vh; */
   }
 `
 
