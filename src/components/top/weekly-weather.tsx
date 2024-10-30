@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 type WeeklyWeatherProps = {
   weeklyData: ForecastDayType[] | null
+  locationValue: string
 }
 
 const WeeklyWeatherContainer = styled.div`
@@ -26,7 +27,10 @@ const WeeklyWeatherInfoWrapper = styled.div`
   }
 `
 
-export const WeeklyWeather = ({ weeklyData }: WeeklyWeatherProps) => {
+export const WeeklyWeather = ({
+  weeklyData,
+  locationValue
+}: WeeklyWeatherProps) => {
   return (
     <>
       <Heading level="h2">週間予報</Heading>
@@ -35,7 +39,10 @@ export const WeeklyWeather = ({ weeklyData }: WeeklyWeatherProps) => {
           {weeklyData && (
             <>
               {weeklyData.map((dayData) => (
-                <Link href={'/'} key={dayData.date}>
+                <Link
+                  href={`detail/${dayData.date}?location=${locationValue}`}
+                  key={dayData.date}
+                >
                   <div>
                     <div>{dayData.date}</div>
                     <Image

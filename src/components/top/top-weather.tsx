@@ -1,8 +1,9 @@
 import { Heading, Input } from '@/components/common'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { WeatherForecastType } from '@/types/weather'
 import { CurrentWeather, WeeklyWeather } from '@/components/top'
+import { useRouter } from 'next/router'
 
 const TopWeatherContainer = styled.div`
   display: flex;
@@ -17,6 +18,9 @@ export const TopWeather = () => {
   )
   const [errorMessage, setErrorMessage] = useState('')
   const [locationValue, setLocationValue] = useState('')
+  const [queryLocationValue, setQueryLocationValue] = useState('')
+  const router = useRouter()
+  const { query, isReady } = router
 
   const fetchWeather = async (value: string) => {
     try {
@@ -39,6 +43,21 @@ export const TopWeather = () => {
   const currentData = weatherData && weatherData.forecast.forecastday[0]
   const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
 
+  useEffect(() => {
+    if (!isReady) return
+
+    const location = !query.location
+      ? ''
+      : Array.isArray(query.location)
+        ? query.location[0]
+        : query.location
+    setQueryLocationValue(location)
+
+    if (queryLocationValue) {
+      void fetchWeather(queryLocationValue)
+    }
+  }, [queryLocationValue, isReady, query])
+
   return (
     <TopWeatherContainer>
       <Heading level={'h1'}>weather-app</Heading>
@@ -50,7 +69,7 @@ export const TopWeather = () => {
       />
       <div>{errorMessage}</div>
       <CurrentWeather currentData={currentData} locationValue={locationValue} />
-      <WeeklyWeather weeklyData={weeklyData} />
+      <WeeklyWeather weeklyData={weeklyData} locationValue={locationValue} />
     </TopWeatherContainer>
   )
 }

@@ -17,7 +17,8 @@ export const DetailWeather = () => {
     null
   )
   const [errorMessage, setErrorMessage] = useState('')
-  const { query, isReady } = useRouter()
+  const router = useRouter()
+  const { query, isReady, push } = router
   const [queryDateValue, setQueryDateValue] = useState('')
   const [queryLocationValue, setQueryLocationValue] = useState('')
 
@@ -36,6 +37,10 @@ export const DetailWeather = () => {
       setErrorMessage('取得失敗')
       setWeatherData(null)
     }
+  }
+
+  const handleNavigation = async (newLocation: string) => {
+    await push(`/?location=${newLocation}`)
   }
 
   useEffect(() => {
@@ -57,7 +62,7 @@ export const DetailWeather = () => {
     if (queryLocationValue) {
       void fetchWeather(queryLocationValue)
     }
-  }, [query, isReady, queryLocationValue])
+  }, [queryLocationValue, isReady, query])
 
   const currentData = weatherData && weatherData.current
   const placeName = weatherData && weatherData.location.name
@@ -68,7 +73,7 @@ export const DetailWeather = () => {
       <Input
         id="location-input-current"
         label="地名または緯度経度"
-        onAction={fetchWeather}
+        onAction={handleNavigation}
         initialValue={queryLocationValue}
       />
       <div>{errorMessage}</div>
