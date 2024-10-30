@@ -9,7 +9,7 @@ type LocationType = {
   localtime: string
 }
 
-type CurrentType = {
+export type CurrentType = {
   last_updated_epoch: number
   last_updated: string
   temp_c: number

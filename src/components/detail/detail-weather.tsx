@@ -1,8 +1,9 @@
 import { Heading, Input } from '@/components/common'
 import { WeatherCurrentType } from '@/types/weather'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DateWeather } from '@/components/detail'
+import { useRouter } from 'next/router'
 
 const DetailWeatherContainer = styled.div`
   display: flex;
@@ -16,6 +17,9 @@ export const DetailWeather = () => {
     null
   )
   const [errorMessage, setErrorMessage] = useState('')
+  const { query, isReady } = useRouter()
+  const [queryDateValue, setQueryDateValue] = useState('')
+  const [queryLocationValue, setQueryLocationValue] = useState('')
 
   const fetchWeather = async (value: string) => {
     try {
@@ -34,19 +38,41 @@ export const DetailWeather = () => {
     }
   }
 
-  console.log(weatherData)
+  useEffect(() => {
+    if (!isReady) return
+    const date = !query.date
+      ? ''
+      : Array.isArray(query.date)
+        ? query.date[0]
+        : query.date
+    setQueryDateValue(date)
+
+    const location = !query.location
+      ? ''
+      : Array.isArray(query.location)
+        ? query.location[0]
+        : query.location
+    setQueryLocationValue(location)
+
+    if (queryLocationValue) {
+      void fetchWeather(queryLocationValue)
+    }
+  }, [query, isReady, queryLocationValue])
+
+  const currentData = weatherData && weatherData.current
+  const placeName = weatherData && weatherData.location.name
 
   return (
     <DetailWeatherContainer>
-      <Heading level={'h1'}>2024-11-1</Heading>
+      <Heading level={'h1'}>{queryDateValue}</Heading>
       <Input
         id="location-input-current"
         label="地名または緯度経度"
         onAction={fetchWeather}
-        initialValue="Osaka"
+        initialValue={queryLocationValue}
       />
       <div>{errorMessage}</div>
-      <DateWeather />
+      <DateWeather currentData={currentData} placeName={placeName} />
     </DetailWeatherContainer>
   )
 }
