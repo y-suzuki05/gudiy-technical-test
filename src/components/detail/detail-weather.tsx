@@ -1,5 +1,5 @@
 import { Heading, Input } from '@/components/common'
-import { WeatherCurrentType } from '@/types/weather'
+import { WeatherForecastType } from '@/types/weather'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DateWeather } from '@/components/detail'
@@ -13,9 +13,9 @@ const DetailWeatherContainer = styled.div`
 `
 
 export const DetailWeather = () => {
-  const [weatherData, setWeatherData] = useState<WeatherCurrentType | null>(
-    null
-  )
+  const [weatherData, setWeatherData] = useState<
+    WeatherForecastType | undefined
+  >(undefined)
   const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
   const { query, isReady, push } = router
@@ -24,18 +24,18 @@ export const DetailWeather = () => {
 
   const fetchWeather = async (value: string) => {
     try {
-      const response = await fetch(`/api/weather-current?location=${value}`)
+      const response = await fetch(`/api/weather-forecast?location=${value}`)
 
       if (!response.ok) {
         throw new Error('取得失敗')
       }
 
-      const data = (await response.json()) as WeatherCurrentType
+      const data = (await response.json()) as WeatherForecastType
       setWeatherData(data)
     } catch (error) {
       console.error(error)
-      setErrorMessage('取得失敗')
-      setWeatherData(null)
+      setErrorMessage('天気データの取得に失敗しました')
+      setWeatherData(undefined)
     }
   }
 
@@ -64,7 +64,9 @@ export const DetailWeather = () => {
     }
   }, [queryLocationValue, isReady, query])
 
-  const currentData = weatherData && weatherData.current
+  const currentData =
+    weatherData &&
+    weatherData.forecast.forecastday.find((day) => day.date === queryDateValue)
   const placeName = weatherData && weatherData.location.name
 
   return (

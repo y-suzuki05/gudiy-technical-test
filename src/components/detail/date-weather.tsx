@@ -1,10 +1,10 @@
-import { CurrentType } from '@/types/weather'
+import { ForecastDayType } from '@/types/weather'
 import { Heading, Image } from '@/components/common'
 import styled from 'styled-components'
 
 type DateWeatherProps = {
-  currentData: CurrentType | null
-  placeName: string | null
+  currentData: ForecastDayType | null | undefined
+  placeName: string | undefined
 }
 
 const DateWeatherContainer = styled.div`
@@ -21,23 +21,29 @@ const DateWeatherInfoWrapper = styled.div`
 `
 
 export const DateWeather = ({ currentData, placeName }: DateWeatherProps) => {
+  console.log('date: ', currentData)
   return (
     <>
-      <Heading level={'h2'}>{`${placeName}の天気`}</Heading>
+      {placeName ? (
+        <Heading level={'h2'}>{`${placeName}の天気`}</Heading>
+      ) : (
+        <></>
+      )}
       {currentData && (
         <DateWeatherContainer>
           <DateWeatherInfoWrapper>
             <Image
-              src={currentData.condition.icon}
-              alt={currentData.condition.text}
+              src={currentData.day.condition.icon}
+              alt={currentData.day.condition.text}
             />
             <ul>
-              <li>気温：{currentData.temp_c}度</li>
-              <li>風速：{currentData.wind_kph}キロメートル</li>
-              <li>降水量：{currentData.precip_mm}ミリ</li>
-              <li>湿度：{currentData.humidity}％</li>
-              <li>体感温度：{currentData.windchill_c}度</li>
-              <li>暑さ指数：{currentData.heatindex_c}度</li>
+              <li>最高気温：{currentData.day.maxtemp_c}度</li>
+              <li>最低気温：{currentData.day.mintemp_c}度</li>
+              <li>平均気温：{currentData.day.avgtemp_c}度</li>
+              <li>最大風速：{currentData.day.maxwind_kph}キロメートル</li>
+              <li>総降水量：{currentData.day.totalprecip_mm}ミリ</li>
+              <li>平均湿度：{currentData.day.avghumidity}％</li>
+              <li>UV：{currentData.day.uv}</li>
             </ul>
           </DateWeatherInfoWrapper>
         </DateWeatherContainer>

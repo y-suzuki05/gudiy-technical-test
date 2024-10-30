@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 type CurrentWeatherProps = {
-  currentData: ForecastDayType | null
+  currentData: ForecastDayType | undefined
   locationValue: string
 }
 

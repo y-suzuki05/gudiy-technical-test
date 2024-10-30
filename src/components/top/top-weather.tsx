@@ -13,9 +13,9 @@ const TopWeatherContainer = styled.div`
 `
 
 export const TopWeather = () => {
-  const [weatherData, setWeatherData] = useState<WeatherForecastType | null>(
-    null
-  )
+  const [weatherData, setWeatherData] = useState<
+    WeatherForecastType | undefined
+  >(undefined)
   const [errorMessage, setErrorMessage] = useState('')
   const [locationValue, setLocationValue] = useState('')
   const [queryLocationValue, setQueryLocationValue] = useState('')
@@ -35,8 +35,8 @@ export const TopWeather = () => {
       setLocationValue(value)
     } catch (error) {
       console.error(error)
-      setErrorMessage('取得失敗')
-      setWeatherData(null)
+      setErrorMessage('天気データの取得に失敗しました')
+      setWeatherData(undefined)
     }
   }
 
@@ -68,6 +68,11 @@ export const TopWeather = () => {
         initialValue={locationValue}
       />
       <div>{errorMessage}</div>
+      {weatherData ? (
+        <Heading level={'h2'}>{weatherData?.location.name}</Heading>
+      ) : (
+        <></>
+      )}
       <CurrentWeather currentData={currentData} locationValue={locationValue} />
       <WeeklyWeather weeklyData={weeklyData} locationValue={locationValue} />
     </TopWeatherContainer>

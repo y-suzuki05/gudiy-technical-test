@@ -4,7 +4,7 @@ import { Heading, Image } from '@/components/common'
 import Link from 'next/link'
 
 type WeeklyWeatherProps = {
-  weeklyData: ForecastDayType[] | null
+  weeklyData: ForecastDayType[] | undefined
   locationValue: string
 }
 
