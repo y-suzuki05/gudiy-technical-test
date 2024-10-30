@@ -10,6 +10,7 @@ const DetailWeatherContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  height: 100vh;
 `
 
 export const DetailWeather = () => {

@@ -48,6 +48,7 @@ export const WeeklyWeather = ({
                     <Image
                       src={dayData.day.condition.icon}
                       alt={dayData.day.condition.text}
+                      width={'100%'}
                     />
                   </div>
                 </Link>
