@@ -72,7 +72,9 @@ export const DetailWeather = () => {
 
   return (
     <DetailWeatherContainer>
-      <Heading level={'h1'}>{queryDateValue}</Heading>
+      <Heading level={'h1'} ariaLabel="対象の日付">
+        {queryDateValue}
+      </Heading>
       <Input
         id="location-input-current"
         label="地名または緯度経度"

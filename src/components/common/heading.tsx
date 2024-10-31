@@ -3,6 +3,7 @@ import styled from 'styled-components'
 type HeadingProps = {
   children: string
   level: 'h1' | 'h2'
+  ariaLabel?: string
 }
 
 const StyledHeading = styled.h1<{ level: 'h1' | 'h2' }>`
@@ -20,9 +21,9 @@ const StyledHeading = styled.h1<{ level: 'h1' | 'h2' }>`
   margin-top: 10px;
 `
 
-export const Heading = ({ children, level }: HeadingProps) => {
+export const Heading = ({ children, level, ariaLabel }: HeadingProps) => {
   return (
-    <StyledHeading as={level} level={level}>
+    <StyledHeading as={level} level={level} aria-label={ariaLabel}>
       {children}
     </StyledHeading>
   )
