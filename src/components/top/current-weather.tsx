@@ -29,7 +29,7 @@ export const CurrentWeather = ({
     <>
       <Heading level="h2">現在の天気</Heading>
       <CurrentWeatherContainer>
-        {currentData && (
+        {currentData ? (
           <Link href={`detail/${currentData.date}?location=${locationValue}`}>
             <CurrentWeatherInfoWrapper>
               <Image
@@ -44,6 +44,8 @@ export const CurrentWeather = ({
               </ul>
             </CurrentWeatherInfoWrapper>
           </Link>
+        ) : (
+          <div>検索してください</div>
         )}
       </CurrentWeatherContainer>
     </>

@@ -35,27 +35,27 @@ export const WeeklyWeather = ({
     <>
       <Heading level="h2">週間予報</Heading>
       <WeeklyWeatherContainer>
-        <WeeklyWeatherInfoWrapper>
-          {weeklyData && (
-            <>
-              {weeklyData.map((dayData) => (
-                <Link
-                  href={`detail/${dayData.date}?location=${locationValue}`}
-                  key={dayData.date}
-                >
-                  <div>
-                    <div>{dayData.date}</div>
-                    <Image
-                      src={dayData.day.condition.icon}
-                      alt={dayData.day.condition.text}
-                      width={'100%'}
-                    />
-                  </div>
-                </Link>
-              ))}
-            </>
-          )}
-        </WeeklyWeatherInfoWrapper>
+        {weeklyData ? (
+          <WeeklyWeatherInfoWrapper>
+            {weeklyData.map((dayData) => (
+              <Link
+                href={`detail/${dayData.date}?location=${locationValue}`}
+                key={dayData.date}
+              >
+                <div>
+                  <div>{dayData.date}</div>
+                  <Image
+                    src={dayData.day.condition.icon}
+                    alt={dayData.day.condition.text}
+                    width={'100%'}
+                  />
+                </div>
+              </Link>
+            ))}
+          </WeeklyWeatherInfoWrapper>
+        ) : (
+          <div>検索してください</div>
+        )}
       </WeeklyWeatherContainer>
     </>
   )
