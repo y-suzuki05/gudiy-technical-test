@@ -1,9 +1,9 @@
 import { Heading, Input } from '@/components/common'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { WeatherForecastType } from '@/types/weather'
 import { CurrentWeather, WeeklyWeather } from '@/components/top'
 import { useRouter } from 'next/router'
+import { useFetchWeather } from '@/hooks'
 
 const TopWeatherContainer = styled.div`
   display: flex;
@@ -13,32 +13,11 @@ const TopWeatherContainer = styled.div`
 `
 
 export const TopWeather = () => {
-  const [weatherData, setWeatherData] = useState<
-    WeatherForecastType | undefined
-  >(undefined)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [locationValue, setLocationValue] = useState('')
   const [queryLocationValue, setQueryLocationValue] = useState('')
   const router = useRouter()
   const { query, isReady } = router
-
-  const fetchWeather = async (value: string) => {
-    try {
-      const response = await fetch(`/api/weather-forecast?location=${value}`)
-
-      if (!response.ok) {
-        throw new Error('取得失敗')
-      }
-
-      const data = (await response.json()) as WeatherForecastType
-      setWeatherData(data)
-      setLocationValue(value)
-    } catch (error) {
-      console.error(error)
-      setErrorMessage('天気データの取得に失敗しました')
-      setWeatherData(undefined)
-    }
-  }
+  const { fetchWeather, weatherData, locationValue, errorMessage } =
+    useFetchWeather()
 
   const currentData = weatherData && weatherData.forecast.forecastday[0]
   const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
@@ -56,7 +35,7 @@ export const TopWeather = () => {
     if (queryLocationValue) {
       void fetchWeather(queryLocationValue)
     }
-  }, [queryLocationValue, isReady, query])
+  }, [isReady, query, queryLocationValue, fetchWeather])
 
   return (
     <TopWeatherContainer>
