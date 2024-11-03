@@ -41,7 +41,7 @@ export const TopWeather = () => {
   }
 
   const currentData = weatherData && weatherData.forecast.forecastday[0]
-  var weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
+  const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
 
   useEffect(() => {
     if (!isReady) return
@@ -60,15 +60,7 @@ export const TopWeather = () => {
 
   return (
     <TopWeatherContainer>
-      <Heading level={'h1'}>
-        
-        
-        
-        weather-app
-        
-        
-        
-        </Heading>
+      <Heading level={'h1'}>weather-app</Heading>
       <Input
         id="location-input"
         label="地名または緯度経度"
