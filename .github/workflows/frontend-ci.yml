@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
       - uses: actions/checkout@v4
 
       - name: Setup Node
@@ -28,12 +27,14 @@ jobs:
           npm format
           npm test
 
+      # 変更されたファイル数をカウントするステップ
       - name: Count changes
         id: changes
         run: |
           git add -N .
           echo "::set-output name=count::$(git diff --name-only | wc -l)"
 
+      # 自動修正が行われた場合pushするステップ
       - name: Commit and push
         run: |
           git config user.name github-actions
