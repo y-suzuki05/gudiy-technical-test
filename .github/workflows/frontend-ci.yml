@@ -42,4 +42,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "fix format & lint:fix"
-          git push origin HEAD
+          git push
