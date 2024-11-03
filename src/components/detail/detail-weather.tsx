@@ -66,7 +66,7 @@ export const DetailWeather = () => {
         onAction={handleNavigation}
         initialValue={queryLocationValue}
       />
-      <div>{errorMessage}</div>
+      {errorMessage && <div>{errorMessage}</div>}
       <DateWeather currentData={currentData} placeName={placeName} />
     </DetailWeatherContainer>
   )

@@ -32,6 +32,7 @@ export const TopWeather = () => {
         : query.location
     setQueryLocationValue(location)
 
+    // 詳細ページから遷移した場合、クエリパラメータの値を使ってデータ取得する
     if (queryLocationValue) {
       void fetchWeather(queryLocationValue)
     }
@@ -46,7 +47,7 @@ export const TopWeather = () => {
         onAction={fetchWeather}
         initialValue={locationValue}
       />
-      <div>{errorMessage}</div>
+      {errorMessage && <div>{errorMessage}</div>}
       {weatherData ? (
         <Heading level={'h2'}>{weatherData?.location.name}</Heading>
       ) : (
