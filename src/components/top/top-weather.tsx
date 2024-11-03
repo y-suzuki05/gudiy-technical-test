@@ -44,7 +44,7 @@ export const TopWeather = () => {
   const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
 
   var name = 'John'
-  console.log(name)
+  // console.log(name)
 
   useEffect(() => {
     if (!isReady) return
