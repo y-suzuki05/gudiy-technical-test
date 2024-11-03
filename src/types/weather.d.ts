@@ -91,3 +91,5 @@ export type WeatherCurrentType = {
   location: LocationType
   current: CurrentType
 }
+
+export type WeatherErrorType = { error: { code: number; message: string } }
