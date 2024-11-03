@@ -24,8 +24,8 @@ jobs:
         run: |
           npm install
           npm run lint:fix
-          npm format
-          npm test
+          npm run format
+          npm run test
 
       # 変更されたファイル数をカウントするステップ
       - name: Count changes
