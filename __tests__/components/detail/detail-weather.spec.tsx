@@ -1,22 +1,7 @@
 import { DetailWeather } from '@/components/detail'
 import { render, screen, waitFor } from '@testing-library/react'
-import { http, HttpResponse } from 'msw'
 import * as NextRouter from 'next/router'
-import { weatherDataMock } from '@mocks/weather-data-mock'
-import { setupServer } from 'msw/node'
 import userEvent from '@testing-library/user-event'
-
-const handlers = [
-  http.get('/api/weather-forecast', () => {
-    return HttpResponse.json(weatherDataMock)
-  })
-]
-
-const server = setupServer(...handlers)
-
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
 
 const useRouterSpy = jest.spyOn(NextRouter, 'useRouter')
 
