@@ -1,9 +1,9 @@
-import { Heading, Input } from '@/components/common'
-import { WeatherForecastType } from '@/types/weather'
+import { Heading, Input, ErrorMessage } from '@/components/common'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DateWeather } from '@/components/detail'
 import { useRouter } from 'next/router'
+import { useFetchWeather } from '@/hooks'
 
 const DetailWeatherContainer = styled.div`
   display: flex;
@@ -19,34 +19,15 @@ const DetailWeatherContainer = styled.div`
 `
 
 export const DetailWeather = () => {
-  const [weatherData, setWeatherData] = useState<
-    WeatherForecastType | undefined
-  >(undefined)
-  const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
   const { query, isReady, push } = router
   const [queryDateValue, setQueryDateValue] = useState('')
   const [queryLocationValue, setQueryLocationValue] = useState('')
+  const { fetchWeather, weatherData, errorMessage, setErrorMessage } =
+    useFetchWeather()
 
-  const fetchWeather = async (value: string) => {
-    try {
-      const response = await fetch(`/api/weather-forecast?location=${value}`)
-
-      if (!response.ok) {
-        throw new Error('取得失敗')
-      }
-
-      const data = (await response.json()) as WeatherForecastType
-      setWeatherData(data)
-    } catch (error) {
-      console.error(error)
-      setErrorMessage('天気データの取得に失敗しました')
-      setWeatherData(undefined)
-    }
-  }
-
-  const handleNavigation = async (newLocation: string) => {
-    await push(`/?location=${newLocation}`)
+  const handleNavigation = (newLocation: string) => {
+    void push(`/?location=${newLocation}`)
   }
 
   useEffect(() => {
@@ -68,7 +49,7 @@ export const DetailWeather = () => {
     if (queryLocationValue) {
       void fetchWeather(queryLocationValue)
     }
-  }, [queryLocationValue, isReady, query])
+  }, [queryLocationValue, isReady, query, fetchWeather])
 
   const currentData =
     weatherData &&
@@ -85,8 +66,11 @@ export const DetailWeather = () => {
         label="地名または緯度経度"
         onAction={handleNavigation}
         initialValue={queryLocationValue}
+        setError={setErrorMessage}
+        placeHolder="35.689 139.692"
       />
-      <div>{errorMessage}</div>
+      <p>緯度と経度は半角スペース区切りで入力してください</p>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <DateWeather currentData={currentData} placeName={placeName} />
     </DetailWeatherContainer>
   )

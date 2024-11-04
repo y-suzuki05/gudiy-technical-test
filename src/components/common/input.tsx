@@ -4,8 +4,10 @@ import styled from 'styled-components'
 type InputProps = {
   id: string
   label: string
-  onAction: (value: string) => Promise<void>
+  onAction: (value: string) => void | Promise<void>
   initialValue?: string
+  setError: React.Dispatch<React.SetStateAction<string | null>>
+  placeHolder: string
 }
 
 const StyledInput = styled.input`
@@ -26,7 +28,9 @@ export const Input = ({
   id,
   label,
   onAction,
-  initialValue = ''
+  initialValue = '',
+  setError,
+  placeHolder
 }: InputProps) => {
   const [inputValue, setInputValue] = useState(initialValue)
 
@@ -34,12 +38,14 @@ export const Input = ({
     setInputValue(initialValue)
   }, [initialValue])
 
-  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
-      try {
-        await onAction(inputValue)
-      } catch (error) {
-        console.error(error)
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (!inputValue.trim()) {
+        setError('地名または緯度経度を入力してください')
+        return
+      } else {
+        setError(null)
+        void onAction(inputValue)
       }
     }
   }
@@ -56,7 +62,8 @@ export const Input = ({
         type="text"
         value={inputValue}
         onChange={handleChange}
-        onKeyDown={(e) => void handleKeyDown(e)}
+        onKeyDown={handleKeyDown}
+        placeholder={placeHolder}
       />
     </div>
   )
