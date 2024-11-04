@@ -16,8 +16,13 @@ export const TopWeather = () => {
   const [queryLocationValue, setQueryLocationValue] = useState('')
   const router = useRouter()
   const { query, isReady } = router
-  const { fetchWeather, weatherData, locationValue, errorMessage } =
-    useFetchWeather()
+  const {
+    fetchWeather,
+    weatherData,
+    locationValue,
+    errorMessage,
+    setErrorMessage
+  } = useFetchWeather()
 
   const currentData = weatherData && weatherData.forecast.forecastday[0]
   const weeklyData = weatherData && weatherData.forecast.forecastday.slice(1)
@@ -46,6 +51,7 @@ export const TopWeather = () => {
         label="地名または緯度経度"
         onAction={fetchWeather}
         initialValue={locationValue}
+        setError={setErrorMessage}
       />
       {errorMessage && <div>{errorMessage}</div>}
       {weatherData ? (

@@ -5,7 +5,7 @@ export const useFetchWeather = () => {
   const [weatherData, setWeatherData] = useState<
     WeatherForecastType | undefined
   >(undefined)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [locationValue, setLocationValue] = useState('')
 
   const fetchWeather = useCallback(async (value: string) => {
@@ -19,6 +19,7 @@ export const useFetchWeather = () => {
       const data = (await response.json()) as WeatherForecastType
       setWeatherData(data)
       setLocationValue(value)
+      setErrorMessage(null)
     } catch (error) {
       console.error(error)
       setErrorMessage('天気データの取得に失敗しました')
@@ -29,6 +30,7 @@ export const useFetchWeather = () => {
   return {
     weatherData,
     errorMessage,
+    setErrorMessage,
     locationValue,
     fetchWeather
   }
