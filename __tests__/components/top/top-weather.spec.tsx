@@ -72,9 +72,7 @@ describe('TopWeather', () => {
 
       await waitFor(() => {
         expect(
-          screen.findByRole('paragraph', {
-            name: '地名または緯度経度を入力してください'
-          })
+          screen.getByText('地名または緯度経度を入力してください')
         ).toBeTruthy()
       })
     })
