@@ -1,4 +1,4 @@
-import { Heading, Input } from '@/components/common'
+import { Heading, Input, ErrorMessage } from '@/components/common'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DateWeather } from '@/components/detail'
@@ -68,7 +68,7 @@ export const DetailWeather = () => {
         initialValue={queryLocationValue}
         setError={setErrorMessage}
       />
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <DateWeather currentData={currentData} placeName={placeName} />
     </DetailWeatherContainer>
   )

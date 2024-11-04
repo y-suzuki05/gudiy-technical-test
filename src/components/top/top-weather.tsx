@@ -1,4 +1,4 @@
-import { Heading, Input } from '@/components/common'
+import { Heading, Input, ErrorMessage } from '@/components/common'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { CurrentWeather, WeeklyWeather } from '@/components/top'
@@ -53,7 +53,7 @@ export const TopWeather = () => {
         initialValue={locationValue}
         setError={setErrorMessage}
       />
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {weatherData ? (
         <Heading level={'h2'}>{weatherData?.location.name}</Heading>
       ) : (
