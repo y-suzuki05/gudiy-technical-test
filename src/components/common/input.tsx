@@ -7,6 +7,7 @@ type InputProps = {
   onAction: (value: string) => void | Promise<void>
   initialValue?: string
   setError: React.Dispatch<React.SetStateAction<string | null>>
+  placeHolder: string
 }
 
 const StyledInput = styled.input`
@@ -28,7 +29,8 @@ export const Input = ({
   label,
   onAction,
   initialValue = '',
-  setError
+  setError,
+  placeHolder
 }: InputProps) => {
   const [inputValue, setInputValue] = useState(initialValue)
 
@@ -61,6 +63,7 @@ export const Input = ({
         value={inputValue}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        placeholder={placeHolder}
       />
     </div>
   )

@@ -52,7 +52,9 @@ export const TopWeather = () => {
         onAction={fetchWeather}
         initialValue={locationValue}
         setError={setErrorMessage}
+        placeHolder="35.689 139.692"
       />
+      <p>緯度と経度は半角スペース区切りで入力してください</p>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {weatherData ? (
         <Heading level={'h2'}>{weatherData?.location.name}</Heading>

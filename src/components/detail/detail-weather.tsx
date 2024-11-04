@@ -67,7 +67,9 @@ export const DetailWeather = () => {
         onAction={handleNavigation}
         initialValue={queryLocationValue}
         setError={setErrorMessage}
+        placeHolder="35.689 139.692"
       />
+      <p>緯度と経度は半角スペース区切りで入力してください</p>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <DateWeather currentData={currentData} placeName={placeName} />
     </DetailWeatherContainer>
