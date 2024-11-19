@@ -21,7 +21,6 @@ const DateWeatherInfoWrapper = styled.div`
 `
 
 export const DateWeather = ({ currentData, placeName }: DateWeatherProps) => {
-  console.log('date: ', currentData)
   return (
     <>
       {placeName ? (
